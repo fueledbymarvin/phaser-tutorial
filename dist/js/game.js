@@ -32,10 +32,16 @@ Bird.prototype = Object.create(Phaser.Sprite.prototype);
 Bird.prototype.constructor = Bird;
 
 Bird.prototype.update = function() {
-    
-    // write your prefab's specific update code here
-    
+    if (this.angle < 90) {
+	this.angle += 2.5;
+    }
 };
+
+Bird.prototype.flap = function() {
+    this.body.velocity.y = -400;
+
+    this.game.add.tween(this).to({angle: -40}, 100).start();
+}
 
 module.exports = Bird;
 
@@ -162,7 +168,7 @@ function Play() {}
 Play.prototype = {
     create: function() {
 	this.game.physics.startSystem(Phaser.Physics.ARCADE);
-	this.game.physics.arcade.gravity.y = 500;
+	this.game.physics.arcade.gravity.y = 1200;
 
 	this.background = this.game.add.sprite(0, 0, 'background');
 
@@ -171,6 +177,14 @@ Play.prototype = {
 
 	this.ground = new Ground(this.game, 0, 400, 334, 112);
 	this.game.add.existing(this.ground);
+
+	var flapKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	flapKey.onDown.add(this.bird.flap, this.bird);
+
+	this.input.onDown.add(this.bird.flap, this.bird);
+
+	this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+
     },
     update: function() {
 	this.game.physics.arcade.collide(this.bird, this.ground);
