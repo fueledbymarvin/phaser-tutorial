@@ -18,13 +18,14 @@ Preload.prototype = {
 	this.load.image('startButton', 'assets/start-button.png');
 
 	this.load.spritesheet('bird', 'assets/bird.png', 34, 24, 3);
+	this.load.spritesheet('pipe', 'assets/pipes.png', 54, 320, 2);
     },
     create: function() {
 	this.asset.cropEnabled = false;
     },
     update: function() {
 	if(!!this.ready) {
-	    this.game.state.start('play');
+	    this.game.state.start('menu');
 	}
     },
     onLoadComplete: function() {
