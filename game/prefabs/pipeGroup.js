@@ -40,4 +40,8 @@ PipeGroup.prototype.checkWorldBounds = function() {
     }
 }
 
+PipeGroup.prototype.stop = function() {
+    this.setAll('body.velocity.x', 0);
+};
+
 module.exports = PipeGroup;
